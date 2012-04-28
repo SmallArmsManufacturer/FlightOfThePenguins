@@ -16,7 +16,6 @@ public class GamePanel extends JPanel implements KeyListener {
 	long prevTime = System.nanoTime();
 	
 	public GamePanel() {
-		setPreferredSize(new Dimension(800, 600));
 	}
 	
 	public static void main(String[] args) {
@@ -27,8 +26,10 @@ public class GamePanel extends JPanel implements KeyListener {
 		
 		window.add(panel);
 		window.addKeyListener(panel);
-		window.pack();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setLocationRelativeTo(null);
+		window.setMinimumSize(new Dimension(500, 470));
+		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		
