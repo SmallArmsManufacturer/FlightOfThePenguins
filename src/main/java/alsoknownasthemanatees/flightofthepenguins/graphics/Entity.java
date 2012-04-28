@@ -1,58 +1,40 @@
 package alsoknownasthemanatees.flightofthepenguins.graphics;
 
-import java.awt.Graphics2D;
-
 public class Entity {
 	
 	private Direction direction = Direction.DOWN;
-	private Sprite[] up = new Sprite[4];
-	private Sprite[] down = new Sprite[4];
-	private Sprite[] left = new Sprite[4];
-	private Sprite[] right = new Sprite[4];
+	private Sprite[][] sprites = new Sprite[4][4];
+	private int frame;
+	private double elapsedTime;
 	
 	public Entity(Type type) {
-		switch (type) {
+		Sprite.Type base = null;
+		switch(type) {
 			case PENGUIN:
-				up[0] = new Sprite(Sprite.Type.PENGUIN_UP1);
-				up[1] = new Sprite(Sprite.Type.PENGUIN_UP2);
-				up[2] = new Sprite(Sprite.Type.PENGUIN_UP3);
-				up[3] = new Sprite(Sprite.Type.PENGUIN_UP2);
-				down[0] = new Sprite(Sprite.Type.PENGUIN_DOWN1);
-				down[1] = new Sprite(Sprite.Type.PENGUIN_DOWN2);
-				down[2] = new Sprite(Sprite.Type.PENGUIN_DOWN3);
-				down[3] = new Sprite(Sprite.Type.PENGUIN_DOWN2);
-				left[0] = new Sprite(Sprite.Type.PENGUIN_LEFT1);
-				left[1] = new Sprite(Sprite.Type.PENGUIN_LEFT2);
-				left[2] = new Sprite(Sprite.Type.PENGUIN_LEFT3);
-				left[3] = new Sprite(Sprite.Type.PENGUIN_LEFT2);
-				right[0] = new Sprite(Sprite.Type.PENGUIN_RIGHT1);
-				right[1] = new Sprite(Sprite.Type.PENGUIN_RIGHT2);
-				right[2] = new Sprite(Sprite.Type.PENGUIN_RIGHT3);
-				right[3] = new Sprite(Sprite.Type.PENGUIN_RIGHT2);
+				base = Sprite.Type.PENGUIN_LEFT1;
 				break;
 			case DOG:
-				up[0] = new Sprite(Sprite.Type.DOG_UP1);
-				up[1] = new Sprite(Sprite.Type.DOG_UP2);
-				up[2] = new Sprite(Sprite.Type.DOG_UP3);
-				up[3] = new Sprite(Sprite.Type.DOG_UP2);
-				down[0] = new Sprite(Sprite.Type.DOG_DOWN1);
-				down[1] = new Sprite(Sprite.Type.DOG_DOWN2);
-				down[2] = new Sprite(Sprite.Type.DOG_DOWN3);
-				down[3] = new Sprite(Sprite.Type.DOG_DOWN2);
-				left[0] = new Sprite(Sprite.Type.DOG_LEFT1);
-				left[1] = new Sprite(Sprite.Type.DOG_LEFT2);
-				left[2] = new Sprite(Sprite.Type.DOG_LEFT3);
-				left[3] = new Sprite(Sprite.Type.DOG_LEFT2);
-				right[0] = new Sprite(Sprite.Type.DOG_RIGHT1);
-				right[1] = new Sprite(Sprite.Type.DOG_RIGHT2);
-				right[2] = new Sprite(Sprite.Type.DOG_RIGHT3);
-				right[3] = new Sprite(Sprite.Type.DOG_RIGHT2);
+				base = Sprite.Type.DOG_LEFT1;
 				break;
+		}
+		for (int dir = 0; dir < 4; dir++) {
+			int[] frames = new int[] { 0, 1, 2, 1 };
+			for (int i = 0; i < frames.length; i++) {
+				sprites[dir][i] = new Sprite(Sprite.Type.values()[base.ordinal() + 3 * dir + frames[i]]);
+			}
 		}
 	}
 	
-	public void paint(Graphics2D g, int x, int y, int size) {
-		down[0].paint(g, x, y, size);
+	public Sprite getSprite() {
+		return sprites[direction.ordinal()][frame];
+	}
+	
+	public void animate(double dt) {
+		if ((int) (elapsedTime + dt) != (int) elapsedTime)
+			frame++;
+		if (frame > 3)
+			frame = 0;
+		elapsedTime += dt;
 	}
 	
 	public enum Type {
@@ -60,7 +42,7 @@ public class Entity {
 	}
 	
 	public enum Direction {
-		UP, DOWN, LEFT, RIGHT
+		LEFT, RIGHT, DOWN, UP
 	}
 	
 }

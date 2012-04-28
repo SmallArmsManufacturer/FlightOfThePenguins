@@ -22,8 +22,10 @@ public class MainGame extends GameState {
 			for (int y = 0; y < level.getHeight(); y++) {
 				level.getTile(x, y).paint(g, x * Sprite.SIZE, y * Sprite.SIZE, Sprite.SIZE);
 				Entity entity = level.getEntity(x, y);
-				if (entity != null)
-					entity.paint(g, x * Sprite.SIZE, y * Sprite.SIZE, Sprite.SIZE);
+				if (entity != null) {
+					entity.animate(dt);
+					entity.getSprite().paint(g, x * Sprite.SIZE, y * Sprite.SIZE, Sprite.SIZE);
+				}
 			}
 		}
 	}
