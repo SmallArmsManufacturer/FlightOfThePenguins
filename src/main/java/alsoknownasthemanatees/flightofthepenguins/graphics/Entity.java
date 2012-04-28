@@ -2,12 +2,16 @@ package alsoknownasthemanatees.flightofthepenguins.graphics;
 
 public class Entity {
 	
-	private Direction direction = Direction.DOWN;
+	public Direction direction = Direction.DOWN;
 	private Sprite[][] sprites = new Sprite[4][4];
 	private int frame;
 	private double elapsedTime;
+	public double x, y;
+	public boolean isMoving = false;
 	
-	public Entity(Type type) {
+	public Entity(Type type, double x, double y) {
+		this.x = x;
+		this.y = y;
 		Sprite.Type base = null;
 		switch(type) {
 			case PENGUIN:
@@ -26,11 +30,11 @@ public class Entity {
 	}
 	
 	public Sprite getSprite() {
-		return sprites[direction.ordinal()][frame];
+		return isMoving ? sprites[direction.ordinal()][frame] : sprites[direction.ordinal()][1];
 	}
 	
 	public void animate(double dt) {
-		if ((int) (elapsedTime + dt) != (int) elapsedTime)
+		if ((elapsedTime + dt) % 0.5 < elapsedTime % 0.5)
 			frame++;
 		if (frame > 3)
 			frame = 0;
