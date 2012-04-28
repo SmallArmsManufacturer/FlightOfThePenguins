@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 
 public class Level {
 	
-	private Sprite[][] terrain;
+	public Sprite[][] terrain;
 	private List<Entity> entities = new ArrayList<Entity>();
 	public Entity player;
 	private Component parent;
@@ -45,11 +45,11 @@ public class Level {
 			for (int y = 0; y < entitiesImage.getHeight(); y++) {
 				Color colour = new Color(entitiesImage.getRGB(x, y));
 				if (colour.equals(Color.BLUE)) {
-					player = new Entity(Entity.Type.PENGUIN, x * Sprite.SIZE , y * Sprite.SIZE);
+					player = new Entity(Entity.Type.PENGUIN, x * Sprite.SIZE , y * Sprite.SIZE, this);
 					entities.add(player);
 				}
 				else if (colour.equals(Color.RED))
-					entities.add(new Entity(Entity.Type.DOG, x * Sprite.SIZE, y * Sprite.SIZE));
+					entities.add(new Dog(x * Sprite.SIZE, y * Sprite.SIZE, this));
 			}
 		}
 	}
@@ -79,7 +79,7 @@ public class Level {
 			}
 		}
 		for (Entity entity : entities) {
-			entity.animate(dt);
+			entity.update(dt);
 			entity.getSprite().paint(g, (int) entity.x * 2 + offset_x, (int) entity.y * 2 + offset_y, Sprite.SIZE * 2);
 		}
 	}

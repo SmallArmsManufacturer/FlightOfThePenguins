@@ -38,7 +38,9 @@ public class MainGame extends GameState {
 				level.player.x += dt * 2 * Sprite.SIZE;
 				break;
 		}
+                
 	}
+        
 	
 	@Override
 	public void keyPressed(KeyEvent ke) {

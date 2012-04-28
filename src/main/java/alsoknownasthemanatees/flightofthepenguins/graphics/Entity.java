@@ -1,5 +1,7 @@
 package alsoknownasthemanatees.flightofthepenguins.graphics;
 
+import alsoknownasthemanatees.flightofthepenguins.Level;
+
 public class Entity {
 	
 	public Direction direction = Direction.DOWN;
@@ -8,10 +10,13 @@ public class Entity {
 	private double elapsedTime;
 	public double x, y;
 	public boolean isMoving = false;
+        public Level level;
+
 	
-	public Entity(Type type, double x, double y) {
+            public Entity(Type type, double x, double y, Level level) {
 		this.x = x;
 		this.y = y;
+                this.level = level;
 		Sprite.Type base = null;
 		switch(type) {
 			case PENGUIN:
@@ -28,6 +33,10 @@ public class Entity {
 			}
 		}
 	}
+            
+        public void update(double dt) {
+            animate(dt);
+        }
 	
 	public Sprite getSprite() {
 		return isMoving ? sprites[direction.ordinal()][frame] : sprites[direction.ordinal()][1];
