@@ -6,6 +6,7 @@ import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -14,7 +15,7 @@ public class SplashScreen extends GameState {
 	
 	double elapsedTime;
 	Sprite[] penguin = new Sprite[4];
-	int x = 0;
+	int x = -128;
 	BufferedImage logo, pressAnyKey;
 	AudioClip clip;
 	
@@ -47,6 +48,11 @@ public class SplashScreen extends GameState {
 		g.drawImage(logo, parent.getWidth() / 2 - logo.getWidth() / 2, parent.getHeight() / 2 - logo.getHeight(), null);
 		if ((int) elapsedTime % 2 == 0)
 			g.drawImage(pressAnyKey, parent.getWidth() / 2 - pressAnyKey.getWidth() / 2, parent.getHeight() / 2 + 128, null);
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent ke) {
+		GameState.getStack().push(new MainGame(parent));
 	}
 	
 }
