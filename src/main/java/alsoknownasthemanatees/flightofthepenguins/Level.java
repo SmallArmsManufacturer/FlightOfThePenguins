@@ -45,7 +45,7 @@ public class Level {
 			for (int y = 0; y < entitiesImage.getHeight(); y++) {
 				Color colour = new Color(entitiesImage.getRGB(x, y));
 				if (colour.equals(Color.BLUE)) {
-					player = new Entity(Entity.Type.PENGUIN, x * Sprite.SIZE, y * Sprite.SIZE);
+					player = new Entity(Entity.Type.PENGUIN, x * Sprite.SIZE , y * Sprite.SIZE);
 					entities.add(player);
 				}
 				else if (colour.equals(Color.RED))
@@ -71,16 +71,16 @@ public class Level {
 	}
 	
 	public void paint(double dt, Graphics2D g) {
-		int offset_x = -(int) player.x + parent.getWidth() / 2 - Sprite.SIZE / 2;
-		int offset_y = -(int) player.y + parent.getHeight() / 2 - Sprite.SIZE / 2;
+		int offset_x = -(int) player.x * 2 + parent.getWidth() / 2 - Sprite.SIZE;
+		int offset_y = -(int) player.y * 2 + parent.getHeight() / 2 - Sprite.SIZE;
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeight(); y++) {
-				getTile(x, y).paint(g, x * Sprite.SIZE + offset_x, y * Sprite.SIZE + offset_y, Sprite.SIZE);
+				getTile(x, y).paint(g, x * Sprite.SIZE * 2 + offset_x, y * Sprite.SIZE * 2 + offset_y, Sprite.SIZE * 2);
 			}
 		}
 		for (Entity entity : entities) {
 			entity.animate(dt);
-			entity.getSprite().paint(g, (int) entity.x + offset_x, (int) entity.y + offset_y, Sprite.SIZE);
+			entity.getSprite().paint(g, (int) entity.x * 2 + offset_x, (int) entity.y * 2 + offset_y, Sprite.SIZE * 2);
 		}
 	}
 	
